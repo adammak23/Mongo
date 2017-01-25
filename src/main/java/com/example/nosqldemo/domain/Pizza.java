@@ -43,8 +43,8 @@ public class Pizza {
 		return this.name;
 	}
 	
-	public void setName(String model) {
-		this.name = model;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	public int getDiameter() {
