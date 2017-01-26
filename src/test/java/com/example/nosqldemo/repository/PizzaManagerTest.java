@@ -119,6 +119,33 @@ public class PizzaManagerTest {
         }
         
         
-       
+        @Test
+        public void checkingFind() {
+                Pizza pizza = pizzaManager.getpizzas("Carbonara").get(0);
+
+                assertEquals(pizza.getName(), "Carbonara");
+                assertEquals(pizza.getPrice(), 22.0, 0.01);
+                assertEquals(pizza.getDiameter(), 20);
+                assertEquals(pizza.getSold(), false);
+                
+        }
+        
+        @Test
+        public void addAddon() {
+            Addon addon = new Addon();
+            addon.setName("Bag");
+            addon.setPrice(22);
+            addonManager.add(addon);
+            Pizza pizza = pizzaManager.getpizzas("Carbonara").get(0);
+            pizza.addAddon(addon);
+            pizzaManager.persist(pizza);
+            
+            pizza = null;
+            pizza = pizzaManager.getpizzas("Carbonara").get(0);
+            
+            assertTrue(pizza.getAddon().size() >= 1);
+        }
+        
+
 
 }
