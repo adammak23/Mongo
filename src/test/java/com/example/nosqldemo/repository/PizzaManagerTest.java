@@ -200,6 +200,29 @@ public class PizzaManagerTest {
             assertTrue(pizza.getAddon().size() == 0);
         }
         
+        @Test
+        public void regexTest() {
 
+                Pizza pizza = new Pizza();
+		pizza.setName("Capricciosa");
+                pizza.setPrice(22);
+                pizza.setDiameter(20);
+                pizza.setSold(false);
+		pizzaManager.persist(pizza);
+		pizza=null;
+                pizza = new Pizza();
+		pizza.setName("Najlepsza");
+                pizza.setPrice(22);
+                pizza.setDiameter(20);
+                pizza.setSold(false);
+		pizzaManager.persist(pizza);
+		pizza=null;
+                
+            List<Pizza> list = pizzaManager.findByNameRegex("[A-Za-z]{2,}");
+            List<Pizza> listAll = (List<Pizza>) pizzaManager.getAll();
+            System.out.println(list.size());
+            assertTrue(list.size()==1);
+            assertTrue(listAll.size()==3);
+        }
 
 }
