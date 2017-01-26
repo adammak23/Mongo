@@ -146,6 +146,60 @@ public class PizzaManagerTest {
             assertTrue(pizza.getAddon().size() >= 1);
         }
         
+        @Test
+        public void removeAddonFrompizza() {
+            Pizza pizza2 = pizzaManager.getpizzas("Carbonara").get(0);
+            Addon addonOther = new Addon();
+            addonOther.setName("Battery");
+            addonOther.setPrice(22);
+            addonManager.add(addonOther);
+            pizza2.addAddon(addonOther);
+            pizzaManager.persist(pizza2);
+            
+                Pizza pizza = new Pizza();
+		pizza.setName("Romana");
+                pizza.setPrice(22);
+                pizza.setDiameter(20);
+                pizza.setSold(false);
+		pizzaManager.persist(pizza);
+		pizza=null;
+            
+            Addon addon = new Addon();
+            addon.setName("Baguuniqe");
+            addon.setPrice(22);
+            addonManager.add(addon);
+            Addon addon2 = new Addon();
+            addon2.setName("Filteruuuuniqe");
+            addon2.setPrice(102);
+            addonManager.add(addon2);
+            pizza = pizzaManager.getpizzas("Romana").get(0);
+            pizza.addAddon(addon);
+            pizza.addAddon(addon2);
+            pizzaManager.persist(pizza);
+            
+            pizza = null;
+            pizza = pizzaManager.getpizzas("Romana").get(0);
+            List<Addon> list = (List<Addon>) addonManager.getAll();
+            
+            assertEquals(list.size(),3);
+            assertEquals(pizza.getAddon().size(),2);
+            
+            for(Addon item : pizza.getAddon()) {
+                addonManager.remove(item);
+            }
+            pizza.setAddom(null);
+            pizzaManager.persist(pizza);
+            
+            
+            list = (List<Addon>) addonManager.getAll();
+            Addon last = list.get(0);
+            assertEquals(last.getName(), "Battery");
+            assertEquals(last.getPrice(), 22, 0.01);
+            
+            pizza = pizzaManager.getpizzas("Romana").get(0);
+            assertTrue(pizza.getAddon().size() == 0);
+        }
+        
 
 
 }
